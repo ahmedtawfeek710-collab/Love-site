@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed ❤️ Omnia</title>
+
+<style>
+* {margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body {
+  background: linear-gradient(to bottom, #3a0000, #7a0000);
+  color:white;text-align:center;overflow-x:hidden;
+  perspective:1000px;
+}
+
+/* العنوان */
+header {padding:60px 20px;}
+header h1 {font-size:36px;color:#ff4d4d;}
+header p {margin-top:10px;opacity:0.8;}
+
+/* gallery */
+.gallery {
+  display:flex;gap:12px;padding:20px;overflow-x:auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.gallery img {
+  width:220px;height:300px;object-fit:cover;border-radius:20px;cursor:pointer;
+  transition: transform 0.6s;
+  scroll-snap-align:center;
+  transform-style: preserve-3d;
+}
+.gallery img.flipped {
+  transform: rotateY(180deg) scale(1.05);
+}
+
+/* fullscreen viewer */
+#viewer {
+  position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:100;
+}
+#viewer img {max-width:90%;max-height:90%;border-radius:20px;}
+
+/* القلوب */
+.heart {
+  position:absolute;font-size:20px;color:#ff4d4d;pointer-events:none;
+  animation:float 3s linear forwards;
+}
+@keyframes float {
+  to {transform: translateY(-120px);opacity:0;}
+}
+
+/* النص الرومانسي */
+footer {padding:60px 20px;font-size:22px;line-height:1.8;color:#ffdede;}
+
+/* زرار الموسيقى الكبير (Splash) */
+#splash {
+  position:fixed;inset:0;background:#7a0000;display:flex;align-items:center;justify-content:center;z-index:200;
+}
+#splash button {
+  padding:20px 40px;font-size:24px;border-radius:15px;background:#ff4d4d;color:white;border:none;cursor:pointer;
+}
+
+/* العداد */
+#timer {
+  font-size:28px;
+  color:#ffb3b3;
+  margin:20px 0 40px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Splash screen لتشغيل الموسيقى -->
+<div id="splash">
+  <button onclick="startMusic()">شغل الموسيقى ❤️</button>
+</div>
+
+<header>
+  <h1>Ahmed ❤️ Omnia</h1>
+  <p>From 19 March 2023</p>
+</header>
+
+<!-- سلايدر الصور -->
+<section class="gallery" id="gallery">
+  <img src="./1.jpg" onclick="flipImg(this)">
+  <img src="./2.jpg" onclick="flipImg(this)">
+  <img src="./3.jpg" onclick="flipImg(this)">
+  <img src="./4.jpg" onclick="flipImg(this)">
+</section>
+
+<!-- العداد -->
+<div id="timer"></div>
+
+<footer id="love-text">
+  <!-- النص الرومانسي سيظهر حرف حرف -->
+</footer>
+
+<!-- fullscreen viewer -->
+<div id="viewer" onclick="closeImg()">
+  <img id="fullImg">
+</div>
+
+<!-- الموسيقى -->
+<audio id="music" loop>
+  <source src="./song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// تشغيل الموسيقى وإخفاء splash
+function startMusic(){
+  const music=document.getElementById("music");
+  music.play().catch(()=>{}); 
+  document.getElementById("splash").style.display='none';
+}
+
+// gallery viewer
+function openImg(src){
+  document.getElementById("viewer").style.display="flex";
+  document.getElementById("fullImg").src=src;
+}
+function closeImg(){document.getElementById("viewer").style.display="none";}
+
+// flip الصور عند الضغط
+function flipImg(img){
+  img.classList.toggle("flipped");
+  openImg(img.src);
+}
+
+// القلوب تتحرك تلقائي بدون لمس
+setInterval(()=>{
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.top=(window.innerHeight + Math.random()*50)+"px";
+  heart.style.fontSize=(Math.random()*20+15)+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),3000);
+},400);
+
+// كتابة النص الرومانسي حرف حرف
+const text="وحياة عينيك وفداها عنيا ده أنا بحبك قد عنيا ❤️";
+const loveEl=document.getElementById("love-text");
+let index=0;
+function typeLove(){
+  if(index<text.length){
+    loveEl.innerHTML += text.charAt(index);
+    index++;
+    setTimeout(typeLove,80);
+  }
+}
+typeLove();
+
+// العداد (Days, Hours, Minutes, Seconds)
+const startDate = new Date("March 19, 2023 00:00:00");
+function updateTimer(){
+  const now = new Date();
+  let diff = Math.floor((now - startDate)/1000);
+  const days = Math.floor(diff / 86400);
+  diff %= 86400;
+  const hours = Math.floor(diff / 3600);
+  diff %= 3600;
+  const minutes = Math.floor(diff / 60);
+  const seconds = diff % 60;
+  document.getElementById("timer").innerText = `${days} أيام • ${hours} ساعات • ${minutes} دقائق • ${seconds} ثواني`;
+}
+setInterval(updateTimer,1000);
+updateTimer();
+
+// تشغيل الموسيقى على أي لمسة للموبايل
+document.body.addEventListener("click",()=>{document.getElementById("music").play().catch(()=>{});},{once:true});
+document.body.addEventListener("touchstart",()=>{document.getElementById("music").play().catch(()=>{});},{once:true});
+</script>
+
+</body>
+</html>
