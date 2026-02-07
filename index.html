@@ -3,174 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ahmed ❤️ Omnia</title>
+<title>Love ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-* {margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body {
-  background: linear-gradient(to bottom, #3a0000, #7a0000);
-  color:white;text-align:center;overflow-x:hidden;
-  perspective:1000px;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Cairo',sans-serif;
 }
 
-/* العنوان */
-header {padding:60px 20px;}
-header h1 {font-size:36px;color:#ff4d4d;}
-header p {margin-top:10px;opacity:0.8;}
-
-/* gallery */
-.gallery {
-  display:flex;gap:12px;padding:20px;overflow-x:auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-.gallery img {
-  width:220px;height:300px;object-fit:cover;border-radius:20px;cursor:pointer;
-  transition: transform 0.6s;
-  scroll-snap-align:center;
-  transform-style: preserve-3d;
-}
-.gallery img.flipped {
-  transform: rotateY(180deg) scale(1.05);
+body{
+  background: radial-gradient(circle at top, #ff2e63, #8b0000);
+  color:#fff;
+  overflow-x:hidden;
+  text-align:center;
 }
 
-/* fullscreen viewer */
-#viewer {
-  position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:100;
-}
-#viewer img {max-width:90%;max-height:90%;border-radius:20px;}
-
-/* القلوب */
-.heart {
-  position:absolute;font-size:20px;color:#ff4d4d;pointer-events:none;
-  animation:float 3s linear forwards;
-}
-@keyframes float {
-  to {transform: translateY(-120px);opacity:0;}
+/* ===== Hearts ===== */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  animation:float 7s linear infinite;
+  opacity:.9;
+  z-index:0;
 }
 
-/* النص الرومانسي */
-footer {padding:60px 20px;font-size:22px;line-height:1.8;color:#ffdede;}
-
-/* زرار الموسيقى الكبير (Splash) */
-#splash {
-  position:fixed;inset:0;background:#7a0000;display:flex;align-items:center;justify-content:center;z-index:200;
-}
-#splash button {
-  padding:20px 40px;font-size:24px;border-radius:15px;background:#ff4d4d;color:white;border:none;cursor:pointer;
+@keyframes float{
+  from{transform:translateY(0) scale(1);opacity:1}
+  to{transform:translateY(-120vh) scale(1.6);opacity:0}
 }
 
-/* العداد */
-#timer {
-  font-size:28px;
-  color:#ffb3b3;
-  margin:20px 0 40px 0;
+/* ===== Music ===== */
+.music-btn{
+  position:fixed;
+  top:15px;
+  left:15px;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:rgba(255,255,255,.25);
+  border:none;
+  color:white;
+  font-size:22px;
+  z-index:10;
+}
+
+/* ===== Slider ===== */
+.slider{
+  margin:90px auto 30px;
+  width:90%;
+  max-width:420px;
+  overflow:hidden;
+  border-radius:25px;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
+  z-index:1;
+}
+
+.slides{
+  display:flex;
+  transition:.7s ease;
+}
+
+.slides img{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+}
+
+/* ===== Timer ===== */
+.timer-box{
+  width:90%;
+  max-width:420px;
+  margin:30px auto;
+  padding:22px;
+  border-radius:25px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter: blur(12px);
+  box-shadow:0 0 35px rgba(0,0,0,.4);
+  animation:fadeUp 1.5s ease;
+  z-index:1;
+}
+
+.timer-box h2{
+  margin-bottom:10px;
+}
+
+.timer-box p{
+  font-size:14px;
+  opacity:.9;
+  margin-bottom:15px;
+}
+
+.time{
+  display:flex;
+  justify-content:space-between;
+}
+
+.unit{
+  width:23%;
+  background:rgba(0,0,0,.35);
+  padding:12px 5px;
+  border-radius:15px;
+}
+
+.unit span{
+  font-size:24px;
+  font-weight:700;
+  display:block;
+}
+
+/* ===== Text ===== */
+.text{
+  margin:70px 20px 110px;
+  font-size:20px;
+  line-height:1.9;
+  animation:fadeUp 2s ease;
+  z-index:1;
+}
+
+/* ===== Anim ===== */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(35px)}
+  to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Splash screen لتشغيل الموسيقى -->
-<div id="splash">
-  <button onclick="startMusic()">شغل الموسيقى ❤️</button>
-</div>
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
 
-<header>
-  <h1>Ahmed ❤️ Omnia</h1>
-  <p>From 19 March 2023</p>
-</header>
-
-<!-- سلايدر الصور -->
-<section class="gallery" id="gallery">
-  <img src="./1.jpg" onclick="flipImg(this)">
-  <img src="./2.jpg" onclick="flipImg(this)">
-  <img src="./3.jpg" onclick="flipImg(this)">
-  <img src="./4.jpg" onclick="flipImg(this)">
-</section>
-
-<!-- العداد -->
-<div id="timer"></div>
-
-<footer id="love-text">
-  <!-- النص الرومانسي سيظهر حرف حرف -->
-</footer>
-
-<!-- fullscreen viewer -->
-<div id="viewer" onclick="closeImg()">
-  <img id="fullImg">
-</div>
-
-<!-- الموسيقى -->
 <audio id="music" loop>
-  <source src="./song.mp3" type="audio/mpeg">
+  <source src="song.mp3" type="audio/mpeg">
 </audio>
 
+<!-- ===== Slider ===== -->
+<div class="slider">
+  <div class="slides" id="slides">
+    <img src="1.jpg">
+    <img src="2.jpg">
+    <img src="3.jpg">
+    <img src="4.jpg">
+    <img src="5.jpg">
+    <img src="6.jpg">
+    <img src="7.jpg">
+    <img src="8.jpg">
+  </div>
+</div>
+
+<!-- ===== Timer ===== -->
+<div class="timer-box">
+  <h2>إحنا مع بعض من ❤️</h2>
+  <p>19 مارس 2023</p>
+  <div class="time">
+    <div class="unit"><span id="d">0</span>يوم</div>
+    <div class="unit"><span id="h">0</span>ساعة</div>
+    <div class="unit"><span id="m">0</span>دقيقة</div>
+    <div class="unit"><span id="s">0</span>ثانية</div>
+  </div>
+</div>
+
+<!-- ===== Romantic Text ===== -->
+<div class="text">
+  وحياة عينيك وفداها عنيا  
+  <br>
+  ده أنا بحبك قد عنيا ❤️  
+  <br><br>
+  من يوم 19 مارس 2023  
+  وكل ثانية وإنتي اختيار قلبي  
+  ومهما الأيام تعدّي… حبك ثابت 💕
+</div>
+
 <script>
-// تشغيل الموسيقى وإخفاء splash
-function startMusic(){
-  const music=document.getElementById("music");
-  music.play().catch(()=>{}); 
-  document.getElementById("splash").style.display='none';
-}
-
-// gallery viewer
-function openImg(src){
-  document.getElementById("viewer").style.display="flex";
-  document.getElementById("fullImg").src=src;
-}
-function closeImg(){document.getElementById("viewer").style.display="none";}
-
-// flip الصور عند الضغط
-function flipImg(img){
-  img.classList.toggle("flipped");
-  openImg(img.src);
-}
-
-// القلوب تتحرك تلقائي بدون لمس
+/* ===== Hearts ===== */
+const hearts=["❤️","💖","💕","💘"];
 setInterval(()=>{
-  const heart=document.createElement("div");
-  heart.className="heart";
-  heart.innerHTML="❤️";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.top=(window.innerHeight + Math.random()*50)+"px";
-  heart.style.fontSize=(Math.random()*20+15)+"px";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),3000);
-},400);
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=16+Math.random()*22+"px";
+  h.style.animationDuration=5+Math.random()*6+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),9000);
+},220);
 
-// كتابة النص الرومانسي حرف حرف
-const text="وحياة عينيك وفداها عنيا ده أنا بحبك قد عنيا ❤️";
-const loveEl=document.getElementById("love-text");
-let index=0;
-function typeLove(){
-  if(index<text.length){
-    loveEl.innerHTML += text.charAt(index);
-    index++;
-    setTimeout(typeLove,80);
-  }
+/* ===== Slider ===== */
+let i=0;
+const slides=document.getElementById("slides");
+setInterval(()=>{
+  i=(i+1)%8;
+  slides.style.transform=`translateX(-${i*100}%)`;
+},3000);
+
+/* ===== Timer ===== */
+const start=new Date("2023-03-19");
+setInterval(()=>{
+  const now=new Date();
+  const diff=now-start;
+  d.innerText=Math.floor(diff/86400000);
+  h.innerText=Math.floor(diff/3600000)%24;
+  m.innerText=Math.floor(diff/60000)%60;
+  s.innerText=Math.floor(diff/1000)%60;
+},1000);
+
+/* ===== Music ===== */
+const music=document.getElementById("music");
+function toggleMusic(){
+  music.paused ? music.play() : music.pause();
 }
-typeLove();
-
-// العداد (Days, Hours, Minutes, Seconds)
-const startDate = new Date("March 19, 2023 00:00:00");
-function updateTimer(){
-  const now = new Date();
-  let diff = Math.floor((now - startDate)/1000);
-  const days = Math.floor(diff / 86400);
-  diff %= 86400;
-  const hours = Math.floor(diff / 3600);
-  diff %= 3600;
-  const minutes = Math.floor(diff / 60);
-  const seconds = diff % 60;
-  document.getElementById("timer").innerText = `${days} أيام • ${hours} ساعات • ${minutes} دقائق • ${seconds} ثواني`;
-}
-setInterval(updateTimer,1000);
-updateTimer();
-
-// تشغيل الموسيقى على أي لمسة للموبايل
-document.body.addEventListener("click",()=>{document.getElementById("music").play().catch(()=>{});},{once:true});
-document.body.addEventListener("touchstart",()=>{document.getElementById("music").play().catch(()=>{});},{once:true});
 </script>
 
 </body>
