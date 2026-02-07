@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Love ❤️</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -14,7 +13,6 @@
   box-sizing:border-box;
   font-family:'Cairo',sans-serif;
 }
-
 body{
   background: radial-gradient(circle at top, #ff2e63, #8b0000);
   color:#fff;
@@ -22,7 +20,7 @@ body{
   text-align:center;
 }
 
-/* ===== Hearts ===== */
+/* Hearts */
 .heart{
   position:fixed;
   bottom:-20px;
@@ -30,11 +28,218 @@ body{
   opacity:.9;
   z-index:0;
 }
-
 @keyframes float{
   from{transform:translateY(0) scale(1);opacity:1}
   to{transform:translateY(-120vh) scale(1.6);opacity:0}
 }
+
+/* Music Button */
+.music-btn{
+  position:fixed;
+  top:15px;
+  left:15px;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:rgba(255,255,255,.25);
+  border:none;
+  color:white;
+  font-size:22px;
+  z-index:10;
+}
+
+/* Slider / Gallery */
+.gallery{
+  margin:90px auto 30px;
+  width:90%;
+  max-width:420px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:10px;
+  z-index:1;
+}
+.gallery img{
+  width:48%;
+  border-radius:15px;
+  cursor:pointer;
+  height:160px;
+  object-fit:cover;
+  transition: transform .3s;
+}
+.gallery img:hover{
+  transform: scale(1.05);
+}
+
+/* Timer */
+.timer-box{
+  width:90%;
+  max-width:420px;
+  margin:30px auto;
+  padding:22px;
+  border-radius:25px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter: blur(12px);
+  box-shadow:0 0 35px rgba(0,0,0,.4);
+  animation:fadeUp 1.5s ease;
+  z-index:1;
+}
+.timer-box h2{
+  margin-bottom:10px;
+}
+.timer-box p{
+  font-size:14px;
+  opacity:.9;
+  margin-bottom:15px;
+}
+.time{
+  display:flex;
+  justify-content:space-between;
+}
+.unit{
+  width:23%;
+  background:rgba(0,0,0,.35);
+  padding:12px 5px;
+  border-radius:15px;
+}
+.unit span{
+  font-size:24px;
+  font-weight:700;
+  display:block;
+}
+
+/* Romantic Text */
+.text{
+  margin:70px 20px 110px;
+  font-size:20px;
+  line-height:1.9;
+  animation:fadeUp 2s ease;
+  z-index:1;
+}
+
+/* Anim */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(35px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Lightbox */
+#viewer {
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+  z-index:1000;
+}
+#viewerImg {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+#closeBtn {
+  position: absolute;
+  top:20px;
+  right:30px;
+  font-size:40px;
+  color:#fff;
+  cursor:pointer;
+  z-index:1010;
+}
+</style>
+</head>
+
+<body>
+
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+<audio id="music" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Gallery -->
+<div class="gallery">
+  <img src="1.jpg" onclick="openImg(this)">
+  <img src="2.jpg" onclick="openImg(this)">
+  <img src="3.jpg" onclick="openImg(this)">
+  <img src="4.jpg" onclick="openImg(this)">
+  <img src="5.jpg" onclick="openImg(this)">
+  <img src="6.jpg" onclick="openImg(this)">
+  <img src="7.jpg" onclick="openImg(this)">
+  <img src="8.jpg" onclick="openImg(this)">
+</div>
+
+<!-- Timer -->
+<div class="timer-box">
+  <h2>إحنا مع بعض من ❤️</h2>
+  <p>19 مارس 2023</p>
+  <div class="time">
+    <div class="unit"><span id="d">0</span>يوم</div>
+    <div class="unit"><span id="h">0</span>ساعة</div>
+    <div class="unit"><span id="m">0</span>دقيقة</div>
+    <div class="unit"><span id="s">0</span>ثانية</div>
+  </div>
+</div>
+
+<!-- Romantic text -->
+<div class="text">
+  وحياة عينيك وفداها عنيا  
+  <br>
+  ده أنا بحبك قد عنيا ❤️  
+  <br><br>
+  من يوم 19 مارس 2023  
+  وكل ثانية وإنتي اختيار قلبي  
+  ومهما الأيام تعدّي… حبك ثابت 💕
+</div>
+
+<!-- Lightbox -->
+<div id="viewer" onclick="closeImg()">
+  <span id="closeBtn" onclick="closeImg()">×</span>
+  <img id="viewerImg">
+</div>
+
+<script>
+/* Hearts */
+const hearts=["❤️","💖","💕","💘"];
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=16+Math.random()*22+"px";
+  h.style.animationDuration=5+Math.random()*6+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),9000);
+},220);
+
+/* Timer */
+const start=new Date("2023-03-19");
+setInterval(()=>{
+  const now=new Date();
+  const diff=now-start;
+  d.innerText=Math.floor(diff/86400000);
+  h.innerText=Math.floor(diff/3600000)%24;
+  m.innerText=Math.floor(diff/60000)%60;
+  s.innerText=Math.floor(diff/1000)%60;
+},1000);
+
+/* Music */
+const music=document.getElementById("music");
+function toggleMusic(){ music.paused?music.play():music.pause(); }
+
+/* Lightbox functions */
+function openImg(img){
+  document.getElementById("viewer").style.display="flex";
+  document.getElementById("viewerImg").src=img.src;
+}
+function closeImg(){
+  document.getElementById("viewer").style.display="none";
+}
+</script>
+
+</body>
+</html>}
 
 /* ===== Music ===== */
 .music-btn{
@@ -219,3 +424,4 @@ function toggleMusic(){
 
 </body>
 </html>
+
